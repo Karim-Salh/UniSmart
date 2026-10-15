@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>اختبار الكاميرا والتعرف على الوجه – UniSmart</title>
+<style>body{font:16px/1.8 Tahoma,sans-serif;background:#f3f5f8;color:#10243a;margin:0;padding:20px}main{max-width:760px;margin:auto}
+.c{background:#fff;border:1px solid #d8e0e6;border-radius:10px;padding:18px;margin-bottom:14px}li{margin:4px 0}.ok{color:#0a7a4b}.no{color:#b42318}
+video{width:100%;max-width:420px;border-radius:8px;background:#000;display:block;margin:10px 0}button{font:inherit;padding:9px 18px;border:0;border-radius:6px;background:#1b3a63;color:#fff;cursor:pointer}</style></head>
+<body><main><h2>اختبار الكاميرا والتعرف على الوجه</h2>
+<div class="c"><ul id="log"></ul><button id="go">ابدأ الاختبار</button><video id="v" autoplay muted playsinline hidden></video><div id="res"></div></div>
+<p>إن ظهرت ✗ في أي خطوة فالسبب مكتوب بجانبها. الصفحة يجب أن تُفتح عبر <b>http://localhost</b> أو https (وليس بالنقر المزدوج على الملف).</p>
+<script>
+const L=(ok,t)=>{const li=document.createElement("li");li.className=ok?"ok":"no";li.textContent=(ok?"✓ ":"✗ ")+t;document.getElementById("log").appendChild(li)};
+const sc=s=>new Promise(r=>{const e=document.createElement("script");e.src=s;e.onload=()=>r(true);e.onerror=()=>r(false);document.head.appendChild(e)});
+document.getElementById("go").onclick=async()=>{document.getElementById("log").innerHTML="";const v=document.getElementById("v");
+ L(location.protocol!=="file:","البروتوكول: "+location.protocol+(location.protocol==="file:"?" — شغّل المشروع عبر خادم (python3 -m http.server 8080 داخل مجلد frontend)":""));
+ L(window.isSecureContext||location.protocol==="file:","السياق الآمن: "+window.isSecureContext);
+ let emb=false;try{emb=window.self!==window.top}catch(_){emb=true}L(!emb,emb?"الصفحة داخل إطار (iframe): قد تمنع الكاميرا":"الصفحة مستقلة");
+ let st=null;try{st=await navigator.mediaDevices.getUserMedia({video:true});v.srcObject=st;v.hidden=false;L(true,"تم تشغيل الكاميرا: "+st.getVideoTracks()[0].label)}catch(e){L(false,"الكاميرا: "+e.name+" — "+(e.message||""));return}
+ L(await sc("assets/vendor/face-api.js"),"تحميل مكتبة face-api");if(!window.faceapi)return;
+ try{await sc("assets/models/models.js");const N=[["tinyFaceDetector","tiny_face_detector_model"],["faceLandmark68TinyNet","face_landmark_68_tiny_model"],["faceRecognitionNet","face_recognition_model"]];if(window.__FM){for(const n of N){const m=__FM[n[1]],r=atob(m.bin),u=new Uint8Array(r.length);for(let i=0;i<r.length;i++)u[i]=r.charCodeAt(i);faceapi.nets[n[0]].loadFromWeightMap(faceapi.tf.io.decodeWeights(u.buffer,m.manifest[0].weights))}}else{await Promise.all(N.map(n=>faceapi.nets[n[0]].loadFromUri("assets/models")))}L(true,"تحميل نماذج الوجه")}catch(e){L(false,"نماذج الوجه: "+e.message);return}
+ let ref=null;const tick=async()=>{try{const ds=await faceapi.detectAllFaces(v,new faceapi.TinyFaceDetectorOptions({inputSize:224,scoreThreshold:.45})).withFaceLandmarks(true).withFaceDescriptors();let m=ds.length?"رُصد "+ds.length+" وجه":"لا يوجد وجه أمام الكاميرا";if(ds.length&&ref)m+=" — المسافة عن المرجع: "+faceapi.euclideanDistance(ds[0].descriptor,ref).toFixed(2)+" (أقل من 0.6 = نفس الشخص)";if(ds.length&&!ref){ref=ds[0].descriptor;m+=" — تم حفظ هذا الوجه كمرجع للمقارنة"}document.getElementById("res").textContent=m}catch(e){}};
+ setInterval(tick,1200)};
+</script></main></body></html>

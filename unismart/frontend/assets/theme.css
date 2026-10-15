@@ -1,0 +1,206 @@
+/* UniSmart — الهوية البصرية v3: "Quiet Academic"
+   فلسفة: سطح فاتح هادئ، حبر كحلي للنص، لون تمييز واحد فقط (أزرق أولترامارين)، خطوط رفيعة بدل الظلال والتدرجات.
+   اللون الوحيد الإضافي هو ألوان الحالة (نجاح/خطأ/تحذير) وتُستخدم في شارات صغيرة فقط.
+   يُحمَّل هذا الملف بعد style.css ويعيد تعريف الرموز (tokens) والمكوّنات؛ كل الألوان من المتغيرات فقط. */
+@font-face{font-family:"Plex Arabic";src:url(fonts/plex-ar-400.woff2) format("woff2");font-weight:400;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Plex Arabic";src:url(fonts/plex-ar-500.woff2) format("woff2");font-weight:500;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Plex Arabic";src:url(fonts/plex-ar-600.woff2) format("woff2");font-weight:600;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Inter UI";src:url(fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter UI";src:url(fonts/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Inter UI";src:url(fonts/inter-600.woff2) format("woff2");font-weight:600;font-display:swap}
+
+:root{
+ --bg:#f5f6f8;--card:#fff;--ink:#101828;--mut:#5b6575;--line:#e4e7ec;--surface2:#f2f4f7;
+ --ac:#2c47d8;--acx:#fff;--acd:#2239b4;--soft:#eef1fd;--me:#e9edfc;--gold:#2c47d8;
+ --ok:#0b7a54;--bad:#b3261e;--warn:#92580a;
+ --navy:#fff;--ac2:#2c47d8;--grad:#2c47d8;--avbg:#2c47d8;
+ --sh:0 1px 2px rgba(16,24,40,.04);--shp:0 12px 32px rgba(16,24,40,.14);
+ --r:12px;--font:"Inter UI","Plex Arabic","Segoe UI",Tahoma,sans-serif;
+}
+[data-theme=dark]{
+ --bg:#0b0e14;--card:#131822;--ink:#e9ecf2;--mut:#9aa4b5;--line:#242b39;--surface2:#1a2030;
+ --ac:#8197ff;--acx:#0b0e14;--acd:#a3b3ff;--soft:#1b2342;--me:#1d2650;--gold:#8197ff;
+ --ok:#4cc9a0;--bad:#ff8a80;--warn:#f0b35c;--navy:#131822;--avbg:#3a4bb8;
+ --sh:none;--shp:0 12px 32px rgba(0,0,0,.5);
+}
+html[lang=ar]{--font:"Plex Arabic","Inter UI","Segoe UI",Tahoma,sans-serif}
+body{font:400 15px/1.65 var(--font);letter-spacing:0;-webkit-font-smoothing:antialiased}
+h1,h2,h3{letter-spacing:-.01em}h2{font-size:24px;font-weight:600;margin-bottom:4px}h3{font-size:15px;font-weight:600}
+.mut{font-size:13.5px}
+::selection{background:var(--soft);color:var(--ink)}
+*{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+
+/* ---- مكوّنات أساسية ---- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:20px}
+.btn{height:38px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;border:1px solid var(--ac);background:var(--ac);color:var(--acx);font:500 14px var(--font);transition:background .15s,border-color .15s}
+.btn:hover{background:var(--acd);border-color:var(--acd);filter:none}
+.btn.o{background:var(--card);color:var(--ink);border-color:var(--line)}.btn.o:hover{background:var(--surface2);border-color:var(--line)}
+.btn.sm{height:30px;padding:0 12px;font-size:13px}
+.btn.gold{background:var(--card);color:var(--ac);border-color:var(--line)}
+input[type=text],input[type=password],input[type=email],input[type=tel],textarea,select{font:400 14.5px var(--font);height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+textarea{height:auto;padding:10px 12px}
+input[type=text]{flex:1 1 auto}.lf input{flex:none;width:100%}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px var(--soft)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.bdg{background:var(--surface2);color:var(--mut);border:1px solid var(--line);font-weight:500;padding:1px 10px;line-height:22px}
+.bdg.info,.bdg.ac{background:var(--soft);color:var(--ac);border-color:transparent}
+.seg{display:inline-flex;padding:3px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;gap:2px;max-width:100%}
+.seg button{border:0;background:none;color:var(--mut);font:500 13.5px var(--font);height:32px;padding:0 14px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed=true],.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.sw{background:var(--line)}.sw[aria-pressed=true]{background:var(--ac)}
+.insight{background:var(--soft);border:1px solid transparent}
+.empty{border:1px dashed var(--line);border-radius:var(--r);background:transparent}
+
+/* ---- الهيكل: قائمة جانبية فاتحة بكامل الطول ---- */
+.shell{grid-template-columns:256px 1fr}.shell.col{grid-template-columns:72px 1fr}
+.side{background:var(--card);color:var(--ink);border-inline-end:1px solid var(--line);box-shadow:none;max-height:none;height:100vh;height:100dvh;padding:14px 12px;gap:2px}
+.brandrow{color:var(--ink);padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.brandrow .mk{width:34px;height:34px;border-radius:9px;background:var(--ink);box-shadow:none;color:var(--card)}
+[data-theme=dark] .brandrow .mk{background:var(--ac);color:var(--acx)}
+.brandrow .mk svg{width:20px;height:20px}
+.bn{font-size:15px;color:var(--ink)}.bn small{color:var(--mut);font-size:11.5px;font-weight:400}
+#nav{gap:1px}
+.ni{color:var(--mut);padding:0 12px;height:40px;border-radius:9px;font:500 14px var(--font)}
+.ni:hover{background:var(--surface2);color:var(--ink)}
+.ni.on{background:var(--soft);color:var(--ac);font-weight:600}.ni.on:before{display:none}
+.ni .ic{width:20px;height:20px;opacity:.9}
+.nb{background:var(--ac);color:var(--acx);font-size:11px;min-width:20px;line-height:18px;height:18px}
+.sidefoot{border-top:1px solid var(--line);padding-top:8px}
+.shell.col .brandrow{justify-content:center;padding-inline:0}.shell.col .ni{padding:0;justify-content:center}
+
+/* ---- الشريط العلوي ---- */
+.top{background:color-mix(in srgb,var(--bg) 86%,transparent);padding:10px 28px;border-bottom:1px solid var(--line);gap:8px}
+.ibtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.ibtn.lng{font:600 12.5px var(--font);width:auto;min-width:38px;padding:0 10px;letter-spacing:.02em}
+.ibtn .nb{top:-6px;inset-inline-end:-6px;border:2px solid var(--bg)}
+.search{background:var(--card);border-radius:10px;height:38px;flex-basis:360px}.search input{height:36px;padding:0;border:0;background:transparent}.search input:focus{box-shadow:none}
+.uchip{height:46px;padding:0 12px 0 6px;border-radius:12px;gap:10px}
+[dir=ltr] .uchip{padding:0 6px 0 12px;flex-direction:row-reverse}
+.uchip .un b{font-size:13.5px;line-height:1.25}.uchip small{font-size:11.5px}
+
+/* ---- الصورة الشخصية: أحجام ثابتة، قص دائري متمركز على الوجه ---- */
+.avt2{--z:36px;width:var(--z);height:var(--z);background:var(--avbg);color:#fff;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line);overflow:visible}
+.avt2 img{border-radius:50%;object-fit:cover;object-position:50% 22%;display:block}
+.avt2 i{font-weight:600;letter-spacing:0}
+.avt2 .act{width:20%;height:20%;min-width:9px;min-height:9px;background:#22a06b;border:2px solid var(--card);bottom:2%;inset-inline-end:2%}
+.avbig{width:132px;height:132px;border-radius:50%;object-fit:cover;object-position:50% 22%;border:3px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+.prow{align-items:center}.prow .avt2,.prow .avbig{flex:none}
+
+/* ---- بطاقة هوية الطالب (الترحيب) ---- */
+.welcome{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px;overflow:visible;box-shadow:var(--sh)}
+.welcome:after{display:none}
+.idc{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.idc .avt2{--z:96px;flex:none;box-shadow:0 0 0 4px var(--card),0 0 0 5px var(--line)}
+.idc .avt2 i{font-size:34px}
+.idi{flex:1;min-width:240px}
+.welcome small{color:var(--mut);opacity:1;font-size:13.5px}
+.welcome h2{color:var(--ink);font-size:30px;margin:0 0 4px;line-height:1.2}
+.welcome p{margin:0 0 12px;opacity:1;color:var(--mut)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px}
+.welcome .bdg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);font-weight:500}
+.idact{display:flex;flex-direction:column;gap:8px;min-width:210px}.idact .btn{width:100%}
+.idact .btn:not(.o){order:-1}
+.hero{background:var(--ink);border-radius:16px}
+
+/* ---- لوحة المحتوى ---- */
+main,.content>main,.pg{max-width:1160px}
+.dg{gap:16px}
+.ch{margin-bottom:14px}
+.rg{background:conic-gradient(var(--ac) calc(var(--p)*360deg),var(--line) 0)}
+.pbar,.bar{background:var(--line)}
+
+/* ---- المرشد: عمود جانبي مستقل + فقاعات هادئة ---- */
+.cside{display:flex;flex-direction:column;gap:16px;position:sticky;top:76px;max-height:calc(100vh - 100px);overflow:auto;padding-bottom:2px}
+.cside .card{margin:0}
+.advwrap{grid-template-columns:minmax(0,1fr) 320px;gap:16px}
+.chat{border-radius:16px;height:calc(100vh - 118px);height:calc(100dvh - 118px)}
+.chead{padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.m{border-radius:14px;font-size:14.5px;line-height:1.75}
+.m.b{background:var(--surface2);border:1px solid var(--line);border-top-left-radius:14px}
+.m.u{background:var(--ac);color:var(--acx);border:0}
+[data-theme=dark] .m.u{background:var(--me);color:var(--ink)}
+.m .src,.src{display:block;margin-top:8px;font-size:12px;color:var(--mut)}
+.sg{gap:8px}
+.chip{height:34px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;font:500 13.5px var(--font);cursor:pointer;transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--ac);background:var(--soft);color:var(--ac)}
+.composer{border-radius:12px;border:1px solid var(--line);background:var(--card);padding:6px}
+.composer input{border:0;box-shadow:none;height:40px;background:transparent}.composer input:focus{box-shadow:none}
+.send{background:var(--ac);color:var(--acx);border-radius:9px;width:40px;height:40px}
+[dir=rtl] .send svg{transform:scaleX(-1)}
+.caps{gap:8px}.cp{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 12px;font:500 13.5px var(--font);color:var(--ink);text-align:start;cursor:pointer}.cp:hover{border-color:var(--ac);color:var(--ac);background:var(--soft)}
+.kv div,.kv li{border-color:var(--line)}.kv b,.kv strong{color:var(--ink)}.kv span{color:var(--mut)}
+.av{background:var(--ac);color:var(--acx)}
+
+/* ---- النوافذ والقوائم ---- */
+.pop{left:auto;right:auto;inset-inline-end:24px;top:60px;border-radius:14px;box-shadow:var(--shp);border:1px solid var(--line)}
+.modal{border-radius:16px;box-shadow:var(--shp)}.ov{background:rgba(16,24,40,.45);backdrop-filter:blur(2px)}
+#toast{border-radius:10px;background:var(--ink);color:var(--card)}
+#sres{border-radius:12px;box-shadow:var(--shp)}
+
+/* ---- تسجيل الدخول ---- */
+.login{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+.login .brand{background:#0f1623;background-image:radial-gradient(circle at 12% 8%,rgba(129,151,255,.18),transparent 42%);color:#e9ecf2}
+.login .brand h1{color:#fff;font-size:34px;letter-spacing:-.02em}.login .brand .mut{color:#a9b3c6}.login .brand p{color:#e9ecf2}
+.login .brand .rule{background:rgba(255,255,255,.18);height:1px;width:56px;margin:14px 0}
+.login .ft span{background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff}
+.lf{position:relative}
+.langsw{position:static;width:max-content;margin-bottom:26px;display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+.langsw button{border:0;background:none;color:var(--mut);font:500 13px var(--font);height:28px;padding:0 12px;border-radius:7px;cursor:pointer}
+.langsw button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.lf .seg{width:100%}.lf .seg button{flex:1}
+.demo button,.demo .chip{border-radius:99px}
+
+/* ---- المرشد الجولة والروبوت ---- */
+.gb{border-radius:14px;box-shadow:var(--shp);border:1px solid var(--line)}
+.gbot{background:none;border:0}
+
+/* ---- LTR: عكس الأوضاع المعتمدة على الاتجاه ---- */
+[dir=ltr] body{font-family:var(--font)}
+[dir=ltr] .side{border-inline-end:1px solid var(--line)}
+@media(max-width:900px){
+ [dir=ltr] .side{transform:translateX(-100%)}[dir=ltr] .side.open,[dir=ltr] .side.show{transform:none}
+ .shell{grid-template-columns:1fr}
+ .side{box-shadow:var(--shp);width:min(300px,86vw)}
+ .top{padding:8px 14px}.search{flex:1 1 auto;min-width:0}
+ .advwrap{grid-template-columns:1fr}
+ .cside{position:static;max-height:none}
+ .chat{height:calc(100dvh - 150px);min-height:420px}
+ .idc{display:grid;grid-template-columns:auto 1fr;column-gap:14px;row-gap:4px;align-items:center}.idi{display:contents}.idc .avt2{--z:68px;grid-row:1/3}.idc .avt2 i{font-size:24px}.idi small{grid-column:2;align-self:end}.idi h2{grid-column:2;align-self:start;margin:0;font-size:24px}.idi p,.idi .chips2,.idc .idact{grid-column:1/-1}.idi p{margin:8px 0 4px}.welcome{padding:18px}.welcome h2{font-size:25px}
+ .idact{flex-direction:row;flex-wrap:wrap;width:100%}.idact .btn{width:auto;flex:1 1 150px}
+ .uchip .un{display:none}.uchip{padding:0 4px;height:42px}
+ .login{grid-template-columns:1fr}.login .brand{padding:28px 20px}
+}
+@media(max-width:520px){.top .search{display:none}.ibtn.lng{min-width:36px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== v3.1: إصلاحات الشكل ===== */
+/* الصورة الشخصية: دائرة كاملة دائمًا مهما كانت أبعاد الصورة الأصلية (كانت تظهر بيضاوية لأن الصورة طولية) */
+.avt2{aspect-ratio:1/1;border-radius:50%;flex:none}
+.avt2 img{position:absolute;inset:0;width:100%;height:100%;max-width:none;aspect-ratio:1/1;border-radius:50%;object-fit:cover;object-position:50% 25%}
+.avbig{aspect-ratio:1/1;max-width:none}
+/* أيقونة المرشد: قبعة تخرج داخل دائرة، بدل أيقونة الكتاب */
+.av svg{width:56%;height:56%}
+.brandrow .mk svg{width:22px;height:22px}
+.gbot svg{filter:drop-shadow(0 6px 14px rgba(34,57,180,.35))}
+.gbot:after{border-color:var(--ac)}
+
+/* ===== v3.1: رفع الملفات في المرشد ===== */
+.attach{flex:none;width:40px;height:40px;border-radius:9px;border:0;background:transparent;color:var(--mut);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.attach:hover{background:var(--soft);color:var(--ac)}
+.fstrip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 2px 2px}
+.fstrip[hidden]{display:none}
+.fchip{display:inline-flex;align-items:center;gap:6px;max-width:100%;height:32px;padding:0 4px 0 10px;border:1px solid var(--line);border-radius:99px;background:var(--surface2);font:500 13px var(--font);color:var(--ink)}
+[dir=rtl] .fchip{padding:0 10px 0 4px}
+.fchip .fn{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:auto}
+.fchip small{color:var(--mut);font-size:11.5px}
+.fchip.off{opacity:.55}
+.fchip button{border:0;background:none;color:var(--mut);cursor:pointer;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:17px;line-height:1;padding:0}
+.fchip button:hover{background:var(--line);color:var(--ink)}
+.fchip .ftg{color:var(--ac)}
+.fstat{font-size:12.5px;color:var(--mut);padding:0 6px}
+.chat.drag{outline:2px dashed var(--ac);outline-offset:-8px;background:var(--soft)}
+
+/* مربع الكتابة متعدد الأسطر */
+.composer textarea{flex:1;border:0;outline:0;box-shadow:none;background:transparent;font:inherit;color:var(--ink);resize:none;min-height:40px;max-height:160px;padding:9px 8px;line-height:1.6;overflow-y:auto}
+.composer{align-items:flex-end}
+.composer .send,.composer .attach{align-self:flex-end}
